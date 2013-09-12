@@ -31,7 +31,7 @@
               ["-v" "--[no-]verbose" :default false]
               ["-f" "--file" "input file"])
         [options _ _] opts
-        data (get-data (:file options))
+        data (pivot.rdat/get-data (:file options))
         res (call-calc (:verbose options) data)
         ]
     (print-result res)))
