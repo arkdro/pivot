@@ -9,7 +9,7 @@
 
 (defn parse-line-with-fun [f line]
   (let [str-seq (clojure.string/split line regex)]
-    (map f str-seq)))
+    (vec (map f str-seq))))
 
 (defn parse-index-line [line]
   (parse-line-with-fun #(Integer. %) line))
@@ -17,25 +17,57 @@
 (defn parse-data-line [line]
   (parse-line-with-fun #(Double. %) line))
 
-(defn valid-item [[n1 n2]]
-  (and
-   (not (= n1 nil))
-   (not (= n2 nil))))
+(defn parse-basic-index-line [lines]
+  (let [line (get lines 1)]
+    (parse-index-line line)))
 
-(defn parse-data-lines [lines]
-  (filter valid-item (map parse-data-line lines)))
+(defn parse-basic-data-line [lines]
+  (let [line (get lines 3)]
+    (parse-data-line line)))
+
+(defn parse-obj-data-line [m lines]
+  (let [idx (+ m 4)
+        line (get lines idx)]
+    (parse-data-line line)))
+
+(defn parse-nonbasic-index-line [lines]
+  (let [line (get lines 2)]
+    (parse-index-line line)))
+
+(defn parse-matrix [[m n] lines]
+  (let [offset 4
+        stop (+ m offset)
+        row-indexes (range offset stop)
+        rows (map #(parse-data-line (get lines %)) row-indexes)]
+    (vec rows)))
+
+(defn split-text-to-lines [text]
+  (vec (clojure.string/split-lines text)))
+
+(defn parse-all-lines [lines]
+  (let [sizes (parse-index-line (get lines 0))
+        [m n] sizes
+        basic-indexes (parse-basic-index-line lines)
+        nonbasic-indexes (parse-nonbasic-index-line lines)
+        basic-values (parse-basic-data-line lines)
+        matrix (parse-matrix sizes lines)
+        obj-values (parse-obj-data-line m lines)
+        cnt-lines (count matrix)]
+    (assert (= cnt-lines m) "wrong number of rows")
+    {:m m
+     :n n
+     :basic-indexes basic-indexes
+     :nonbasic-indexes nonbasic-indexes
+     :obj-values obj-values
+     :basic-values basic-values
+     :matrix matrix}
+    ))
+
+(defn parse-whole-text [text]
+  (let [lines (split-text-to-lines text)]
+    (parse-all-lines lines)))
 
 (defn get-data [fname]
-  (let [text (slurp fname)
-        lines (clojure.string/split-lines text)
-        size-line (first lines)
-        data-lines (rest lines)
-        [n-items capacity] (parse-index-line size-line)
-        items (vec (parse-data-lines data-lines))
-        cnt-lines (count data-lines)
-        cnt-items (count items)
-        ]
-    (assert (= cnt-lines cnt-items) "data items not equal data lines")
-    {:n n-items :c capacity :items items}
-    ))
+  (let [text (slurp fname)]
+    (parse-whole-text text)))
 
