@@ -30,6 +30,42 @@
             "-1 0.001 -2 0"
             "1 -1  2 3 1"])
 
+(def lines2 ["3 4"
+             "1 3 6 5"
+             "2 4 5 7"
+             "1 3 0"
+             "0 0 -1 -2"
+             "1 -1 0 -1"
+             "-1 0.001 -2 0"
+             "1 -1  2 3 1"])
+
+(def lines3 ["3 4"
+             "1 3 6"
+             "2 4 5 7 0"
+             "1 3 0"
+             "0 0 -1 -2"
+             "1 -1 0 -1"
+             "-1 0.001 -2 0"
+             "1 -1  2 3 1"])
+
+(def lines4 ["3 4"
+             "1 3 6"
+             "2 4 5 7"
+             "1 3 0"
+             "10 0 0 -1 -2"
+             "1 -1 0 -1"
+             "-1 0.001 -2 0"
+             "1 -1  2 3 1"])
+
+(def lines5 ["3 4"
+             "1 3 6"
+             "2 4 5 7"
+             "1 3 0"
+             "0 0 -1 -2"
+             "1 -1 0 -1"
+             "-1 0.001 -2 0"
+             "11 1 -1  2 3 1"])
+
 (def parsed {
              :m 3
              :n 4
@@ -53,5 +89,25 @@
   (let [act (pivot.rdat/parse-all-lines lines)
         exp parsed]
     (is (= exp act))
+    ))
+
+(deftest validate-parsed-test-2
+  (let [data (pivot.rdat/parse-all-lines lines2)]
+    (is (thrown? java.lang.AssertionError (pivot.rdat/validate-parsed data)))
+    ))
+
+(deftest validate-parsed-test-3
+  (let [data (pivot.rdat/parse-all-lines lines3)]
+    (is (thrown? java.lang.AssertionError (pivot.rdat/validate-parsed data)))
+    ))
+
+(deftest validate-parsed-test-4
+  (let [data (pivot.rdat/parse-all-lines lines4)]
+    (is (thrown? java.lang.AssertionError (pivot.rdat/validate-parsed data)))
+    ))
+
+(deftest validate-parsed-test-5
+  (let [data (pivot.rdat/parse-all-lines lines5)]
+    (is (thrown? java.lang.AssertionError (pivot.rdat/validate-parsed data)))
     ))
 
