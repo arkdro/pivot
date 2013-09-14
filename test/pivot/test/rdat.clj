@@ -45,14 +45,7 @@
 
 (deftest split-text-to-lines-test
   (let [act (pivot.rdat/split-text-to-lines text)
-        exp ["3 4"
-             "1 3 6"
-             "2 4 5 7"
-             "1 3 0"
-             "0 0 -1 -2"
-             "1 -1 0 -1"
-             "-1 0.001 -2 0"
-             "1 -1  2 3 1"]]
+        exp lines]
     (is (= exp act))
     ))
 
