@@ -53,7 +53,6 @@
         matrix (parse-matrix sizes lines)
         obj-values (parse-obj-data-line m lines)
         cnt-lines (count matrix)]
-    (assert (= cnt-lines m) "wrong number of rows")
     {:m m
      :n n
      :basic-indexes basic-indexes
@@ -67,7 +66,26 @@
   (let [lines (split-text-to-lines text)]
     (parse-all-lines lines)))
 
+(defn validate-parsed [{m :m
+                        n :n
+                        basic-indexes :basic-indexes
+                        nonbasic-indexes :nonbasic-indexes
+                        obj-values :obj-values
+                        basic-values :basic-values
+                        matrix :matrix
+                        }]
+  (assert (= (count basic-indexes) m) "wrong number of basic indexes")
+  (assert (= (count nonbasic-indexes) n) "wrong number of non-basic indexes")
+  (assert (= (count obj-values) (inc n)) "wrong number of obj values")
+  (assert (= (count basic-values) m) "wrong number of basic values")
+  (assert (= (count matrix) m) "wrong number of matrix rows")
+  (doseq [row matrix]
+    (assert (= (count row) n) "wrong number of row items"))
+  )
+
 (defn get-data [fname]
-  (let [text (slurp fname)]
-    (parse-whole-text text)))
+  (let [text (slurp fname)
+        data (parse-whole-text text)]
+    (validate-parsed data)
+    data))
 
