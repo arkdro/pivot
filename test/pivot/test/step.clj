@@ -37,3 +37,18 @@
                    [3 0 -1 -1])))
   )
 
+(deftest make-empty-row-test
+  (is (= [nil nil nil nil nil] (pivot.step/make-empty-row 2 2)))
+  )
+
+(deftest make-empty-matrix-test
+  (is (= [
+          [nil nil nil nil nil]
+          [nil nil nil nil nil]
+          [nil nil nil nil nil]
+          [nil nil nil nil nil]
+          [nil nil nil nil nil]
+          ]
+         (pivot.step/make-empty-matrix 2 2)))
+  )
+
