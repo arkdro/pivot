@@ -52,3 +52,16 @@
          (pivot.step/make-empty-matrix 2 2)))
   )
 
+(deftest fill-one-row-aux-test-1
+  (is (= :stub (pivot.step/fill-one-row-aux [] [] :stub)))
+  )
+
+(deftest fill-one-row-aux-test-2
+  (let [row [2 -3 1 1]
+        indexes [3 4 2 7]
+        acc [nil nil nil nil nil nil nil nil]
+        act (pivot.step/fill-one-row-aux row indexes acc)
+        exp [nil nil 1 2 -3 nil nil 1]]
+    (is (= exp act))
+    ))
+
