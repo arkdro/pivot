@@ -6,7 +6,7 @@
   (cond (empty? indexes) nil
         (empty? values) nil
         :default (let [joined (map #(vec [%1 %2]) indexes values)
-                       pos (filter #(not (neg? (second %))) joined)]
+                       pos (filter #(pos? (second %)) joined)]
                    (if (empty? pos) nil
                        (reduce #(min-key first %1 %2) pos)))))
 
