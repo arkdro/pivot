@@ -65,3 +65,14 @@
     (is (= exp act))
     ))
 
+(deftest fill-one-row-test-1
+  (let [row [2 -3 1 1]
+        indexes [3 4 2 7]
+        basic-koef 11
+        m 3
+        n 4
+        act (pivot.step/fill-one-row m n basic-koef row indexes)
+        exp [11 nil 1 2 -3 nil nil 1]]
+    (is (= exp act))
+    ))
+
