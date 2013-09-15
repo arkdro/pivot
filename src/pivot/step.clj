@@ -58,8 +58,9 @@
 
 (defn fill-obj-row [m n nonbasic-indexes obj-values acc-matrix]
   (let [obj-koef (first obj-values)
-        obj-row (rest obj-values)]
-    (fill-one-row m n obj-koef obj-row nonbasic-indexes)))
+        obj-row (rest obj-values)
+        new-obj-row (fill-one-row m n obj-koef obj-row nonbasic-indexes)]
+    (assoc acc-matrix 0 new-obj-row)))
 
 (defn fill-rows-aux [idx acc-matrix
                      {m :m
