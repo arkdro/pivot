@@ -76,3 +76,21 @@
     (is (= exp act))
     ))
 
+(deftest fill-obj-row-test
+  (let [obj-values [11 2 -3 1 1]
+        nonbasic-indexes [3 4 2 7]
+        matrix [
+                [nil nil nil nil nil nil nil nil]
+                [0 1 2 3 4 5 6 7]
+                ]
+        m 3
+        n 4
+        act (pivot.step/fill-obj-row m n nonbasic-indexes obj-values matrix)
+        exp [
+             [11 nil 1 2 -3 nil nil 1]
+             [0 1 2 3 4 5 6 7]
+             ]
+        ]
+    (is (= exp act))
+    ))
+
