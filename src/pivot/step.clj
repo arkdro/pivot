@@ -52,7 +52,7 @@
 
 (defn fill-one-row [m n basic-koef in-row nonbasic-indexes]
   (let [row-no-koef (make-empty-row m n)
-        row (assoc row-no-koef basic-koef)
+        row (assoc row-no-koef 0 basic-koef)
         out-row (fill-one-row-aux in-row nonbasic-indexes row)]
     (vec out-row)))
 
