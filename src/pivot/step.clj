@@ -26,6 +26,16 @@
                     (< i1 i2) item1
                     :default item2)))))
 
+(defn find-leaving-var [indexes basic-values column-values]
+  (cond (empty? indexes) nil
+        (empty? basic-values) nil
+        (empty? column-values) nil
+        :default (let [joined (map #(vec [%1 %2 %3])
+                                   indexes basic-values column-values)
+                       pos (filter #(neg? (get % 2)) joined)]
+                   (if (empty? pos) nil
+                       (reduce #(min-by-ratio-or-index %1 %2) pos)))))
+
 ;; {:m m
 ;;  :n n
 ;;  :basic-indexes basic-indexes
