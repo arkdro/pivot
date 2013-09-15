@@ -24,3 +24,16 @@
   (is (= [4 5 -6] (pivot.step/min-by-ratio-or-index [1 -3 -2] [4 5 -6])))
   )
 
+(deftest find-leaving-var-test-1
+  (is (= nil (pivot.step/find-leaving-var [] [] [])))
+  (is (= nil (pivot.step/find-leaving-var [3] [2] [3])))
+  (is (= [5 3 -1] (pivot.step/find-leaving-var [5] [3] [-1])))
+  )
+
+(deftest find-leaving-var-test-2
+  (is (= [5 3 -1] (pivot.step/find-leaving-var
+                   [3 4 5 6]
+                   [2 11 3 6]
+                   [3 0 -1 -1])))
+  )
+
