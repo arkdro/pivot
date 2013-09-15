@@ -1,5 +1,5 @@
 (ns pivot.step
-  (:require pivot.misc)
+  (:require [pivot.misc :as m])
   )
 
 (defn find-entering-var [indexes values]
