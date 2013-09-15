@@ -2,7 +2,22 @@
   (:require pivot.misc)
   )
 
-;; {:n n-items :c capacity :items items}
+(defn find-leaving-var [indexes values]
+  (cond (empty? indexes) nil
+        (empty? values) nil
+        :default (let [joined (map #(vec [%1 %2]) indexes values)
+                       pos (filter #(not (neg? (second %))) joined)]
+                   (if (empty? pos) nil
+                       (reduce #(min-key first %1 %2) pos)))))
+
+;; {:m m
+;;  :n n
+;;  :basic-indexes basic-indexes
+;;  :nonbasic-indexes nonbasic-indexes
+;;  :obj-values obj-values
+;;  :basic-values basic-values
+;;  :matrix matrix}
+
 (defn calc [{n-items :n
              capacity :c
              items :items
