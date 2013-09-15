@@ -13,3 +13,14 @@
   (is (= nil (pivot.step/find-entering-var [] [])))
   )
 
+(deftest min-by-ratio-or-index-test
+  (is (= [] (pivot.step/min-by-ratio-or-index [])))
+  (is (= [1 2 0] (pivot.step/min-by-ratio-or-index [1 2 0])))
+  (is (= [1 2 3] (pivot.step/min-by-ratio-or-index [1 2 3])))
+  (is (= [1 2 3] (pivot.step/min-by-ratio-or-index [1 2 3] [4 5 6])))
+  (is (= nil (pivot.step/min-by-ratio-or-index [1 2 0] [4 5 0])))
+  (is (= [1 2 3] (pivot.step/min-by-ratio-or-index [1 2 3] [4 5 0])))
+  (is (= [1 -2 3] (pivot.step/min-by-ratio-or-index [1 -2 3] [4 5 -6])))
+  (is (= [4 5 -6] (pivot.step/min-by-ratio-or-index [1 -3 -2] [4 5 -6])))
+  )
+
