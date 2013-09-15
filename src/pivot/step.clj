@@ -2,7 +2,7 @@
   (:require pivot.misc)
   )
 
-(defn find-leaving-var [indexes values]
+(defn find-entering-var [indexes values]
   (cond (empty? indexes) nil
         (empty? values) nil
         :default (let [joined (map #(vec [%1 %2]) indexes values)
