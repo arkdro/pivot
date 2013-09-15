@@ -36,22 +36,71 @@
                    (if (empty? pos) nil
                        (reduce #(min-by-ratio-or-index %1 %2) pos)))))
 
-;; {:m m
-;;  :n n
-;;  :basic-indexes basic-indexes
-;;  :nonbasic-indexes nonbasic-indexes
-;;  :obj-values obj-values
-;;  :basic-values basic-values
-;;  :matrix matrix}
+(defn make-empty-row [m n]
+  (let [size (+ m n 1)]
+    (vec (repeat size nil))))
 
-(defn calc [{n-items :n
-             capacity :c
-             items :items
-             :as data}]
-  (let [
+(defn make-empty-matrix [m n]
+  (let [size (+ m n 1)
+        row (make-empty-row m n)]
+    (vec (repeat size row))))
+
+(defn fill-one-row-aux [[h-row & t-row] [h-idx & t-idx] acc]
+  (if (or (nil? h-row) (nil? h-idx)) acc
+      (let [new-acc (assoc acc h-idx h-row)]
+        (recur t-row t-idx new-acc))))
+
+(defn fill-one-row [m n basic-koef in-row nonbasic-indexes]
+  (let [row-no-koef (make-empty-row m n)
+        row (assoc row-no-koef basic-koef)
+        out-row (fill-one-row-aux in-row nonbasic-indexes row)]
+    (vec out-row)))
+
+(defn fill-obj-row [m n nonbasic-indexes obj-values acc-matrix]
+  (let [obj-koef (first obj-values)
+        obj-row (rest obj-values)]
+    (fill-one-row m n obj-koef obj-row nonbasic-indexes)))
+
+(defn fill-rows-aux [idx acc-matrix
+                     {m :m
+                      n :n
+                      basic-indexes :basic-indexes
+                      nonbasic-indexes :nonbasic-indexes
+                      basic-values :basic-values
+                      obj-values :obj-values
+                      matrix :matrix
+                      :as dict}]
+  (if (>= idx m) (fill-obj-row m n nonbasic-indexes obj-values acc-matrix)
+      (let [in-row (get matrix idx)
+            basic-koef (get basic-values idx)
+            new-row (fill-one-row m n basic-koef in-row nonbasic-indexes)
+            subscript (get basic-indexes idx)
+            new-acc-matrix (assoc acc-matrix subscript new-row)]
+        (recur (inc idx) new-acc-matrix dict))))
+
+(defn fill-rows [acc-matrix dict]
+  (fill-rows-aux 0 acc-matrix dict)
+  )
+
+(defn make-full-matrix [{m :m
+                         n :n
+                         :as dict}]
+  (let [empty (make-empty-matrix m n)]
+    (fill-rows empty dict)))
+
+(defn calc [{m :m
+             n :n
+             basic-indexes :basic-indexes
+             nonbasic-indexes :nonbasic-indexes
+             obj-values :obj-values
+             basic-values :basic-values
+             matrix :matrix
+             :as dict}]
+  (let [upd-matrix (make-full-matrix dict)
         ]
     {:opt
      :val
-     })
+     }
+    )
   )
 
