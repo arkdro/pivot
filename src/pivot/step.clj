@@ -118,11 +118,13 @@
     new-dict))
 
 (defn calc [dict]
-  (let [[obj-row z matrix] (make-full-matrix dict)
-        new-dict (assoc dict
-                   :z z
-                   :obj-row obj-row
-                   :matrix matrix)
+  (let [new-dict (prepare-dict dict)
+        {obj-row :obj-row
+         nonbasic-indexes :nonbasic-indexes
+         basic-indexes :basic-indexes
+         basic-column :basic-column
+         matrix :matrix}
+        new-dict
         ]
     new-dict
     )
