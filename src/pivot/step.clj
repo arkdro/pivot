@@ -5,7 +5,7 @@
 (defn find-entering-var [indexes values]
   (cond (empty? indexes) nil
         (empty? values) nil
-        :default (let [joined (map #(vec [%1 %2]) indexes values)
+        :default (let [joined (map #(vec [%1 (get values %1)]) indexes)
                        pos (filter #(pos? (second %)) joined)]
                    (if (empty? pos) nil
                        (reduce #(min-key first %1 %2) pos)))))
