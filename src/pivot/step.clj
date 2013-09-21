@@ -104,23 +104,14 @@
                    :matrix matrix)]
     new-dict))
 
-(defn calc [{m :m
-             n :n
-             basic-indexes :basic-indexes
-             nonbasic-indexes :nonbasic-indexes
-             obj-values :obj-values
-             basic-values :basic-values
-             matrix :matrix
-             :as dict}]
+(defn calc [dict]
   (let [[obj-row z matrix] (make-full-matrix dict)
         new-dict (assoc dict
                    :z z
                    :obj-row obj-row
                    :matrix matrix)
         ]
-    {:opt
-     :val
-     }
+    new-dict
     )
   )
 
