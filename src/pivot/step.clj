@@ -41,9 +41,8 @@
     (vec (repeat size nil))))
 
 (defn make-empty-matrix [m n]
-  (let [size (+ m n 1)
-        row (make-empty-row m n)]
-    (vec (repeat size row))))
+  (let [size (+ m n 1)]
+    (vec (repeat size nil))))
 
 (defn fill-one-row-aux [[h-row & t-row] [h-idx & t-idx] acc]
   (if (or (nil? h-row) (nil? h-idx)) acc
