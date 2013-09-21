@@ -71,8 +71,8 @@
         basic-koef 11
         m 3
         n 4
-        act (pivot.step/fill-one-row m n basic-koef row indexes)
-        exp [11 nil 1 2 -3 nil nil 1]]
+        act (pivot.step/fill-one-row m n row indexes)
+        exp [nil nil 1 2 -3 nil nil 1]]
     (is (= exp act))
     ))
 
@@ -85,11 +85,8 @@
                 ]
         m 3
         n 4
-        act (pivot.step/fill-obj-row m n nonbasic-indexes obj-values matrix)
-        exp [
-             [11 nil 1 2 -3 nil nil 1]
-             [0 1 2 3 4 5 6 7]
-             ]
+        act (pivot.step/fill-obj-row m n nonbasic-indexes obj-values)
+        exp [nil nil 1 2 -3 nil nil 1]
         ]
     (is (= exp act))
     ))
