@@ -1,5 +1,6 @@
 (ns pivot.test.step
   (:use clojure.tools.trace)
+  (:use clojure.pprint)
   (:use [clojure.test]))
 
 ;; (trace-ns 'pivot.step)
@@ -84,6 +85,42 @@
         act (pivot.step/fill-obj-row m n nonbasic-indexes obj-values)
         exp [nil nil 1 2 -3 nil nil 1]
         ]
+    (is (= exp act))
+    ))
+
+(deftest prepare-dict-test
+  (let [dict {:m 3
+              :n 4
+              :basic-indexes [1 5 6]
+              :nonbasic-indexes [3 4 2 7]
+              :obj-values [10.0 -1.0 1.0 -1.0 0.0]
+              :basic-values [4.0 5.0 0.0]
+              :matrix [[2.0 -3.0 1.0 1.0]
+                       [-1.0 3.0 -1.0 -2.0]
+                       [0.0 -1.0 1.0 3.0]]
+              }
+        exp {:m 3
+             :n 4
+             :basic-indexes [1 5 6]
+             :nonbasic-indexes [3 4 2 7]
+             :obj-values [10.0 -1.0 1.0 -1.0 0.0]
+             :basic-values [4.0 5.0 0.0]
+             :obj-row [nil nil -1.0 -1.0 1.0 nil nil 0.0]
+             :matrix [
+                      nil
+                      [nil nil 1.0 2.0 -3.0 nil nil 1.0]
+                      nil
+                      nil
+                      nil
+                      [nil nil -1.0 -1.0 3.0 nil nil -2.0]
+                      [nil nil 1.0 0.0 -1.0 nil nil 3.0]
+                      nil
+                      ]
+             :z 10.0
+             }
+        act (pivot.step/prepare-dict dict)
+        ]
+    ;; (pprint act)
     (is (= exp act))
     ))
 
