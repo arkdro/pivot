@@ -88,6 +88,16 @@
     (is (= exp act))
     ))
 
+(deftest fill-basic-column
+  (let [m 3
+        n 4
+        basic-indexes [1 5 6]
+        basic-values [4.0 5.0 0.0]
+        act (pivot.step/fill-basic-column m n basic-indexes basic-values)
+        exp [nil 4.0 nil nil nil 5.0 0.0 nil]]
+    (is (= exp act))
+    ))
+
 (deftest prepare-dict-test
   (let [dict {:m 3
               :n 4
