@@ -135,3 +135,15 @@
     (is (= exp act))
     ))
 
+(deftest get-row-item-test
+  (is (= nil (pivot.step/get-row-item 3 nil)))
+  (is (= nil (pivot.step/get-row-item nil [[3 4 5] nil [1 2 0] nil])))
+  (is (= 5 (pivot.step/get-row-item 2 [3 4 5])))
+  )
+
+(deftest get-x-column-test
+  (is (= nil (pivot.step/get-x-column nil [[]])))
+  (is (= nil (pivot.step/get-x-column 3 nil)))
+  (is (= [5 nil 0 nil] (pivot.step/get-x-column 2 [[3 4 5] nil [1 2 0] nil])))
+  )
+
