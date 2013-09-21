@@ -125,6 +125,10 @@
          basic-column :basic-column
          matrix :matrix}
         new-dict
+        [entering _] (find-entering-var nonbasic-indexes obj-row)
+        [leaving _ _] (find-leaving-var basic-indexes
+                                        basic-column
+                                        (get-x-column entering matrix))
         ]
     new-dict
     )
