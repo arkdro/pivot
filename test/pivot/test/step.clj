@@ -27,15 +27,15 @@
 
 (deftest find-leaving-var-test-1
   (is (= nil (pivot.step/find-leaving-var [] [] [])))
-  (is (= nil (pivot.step/find-leaving-var [3] [2] [3])))
-  (is (= [5 3 -1] (pivot.step/find-leaving-var [5] [3] [-1])))
+  (is (= nil (pivot.step/find-leaving-var [3] [nil nil nil 2] [nil nil nil 3])))
+  (is (= [2 3 -1] (pivot.step/find-leaving-var [2] [nil nil 3] [nil nil -1])))
   )
 
 (deftest find-leaving-var-test-2
   (is (= [5 3 -1] (pivot.step/find-leaving-var
                    [3 4 5 6]
-                   [2 11 3 6]
-                   [3 0 -1 -1])))
+                   [nil nil nil 2 11 3 6]
+                   [nil nil nil 3 0 -1 -1])))
   )
 
 (deftest make-empty-row-test
