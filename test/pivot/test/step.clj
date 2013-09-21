@@ -88,7 +88,7 @@
     (is (= exp act))
     ))
 
-(deftest fill-basic-column
+(deftest fill-basic-column-test
   (let [m 3
         n 4
         basic-indexes [1 5 6]
