@@ -42,15 +42,11 @@
   )
 
 (deftest make-empty-matrix-test
-  (is (= [
-          [nil nil nil nil nil]
-          [nil nil nil nil nil]
-          [nil nil nil nil nil]
-          [nil nil nil nil nil]
-          [nil nil nil nil nil]
-          ]
-         (pivot.step/make-empty-matrix 2 2)))
-  )
+  (let [act (pivot.step/make-empty-matrix 2 2)
+        exp [nil nil nil nil nil]
+        ]
+    (is (= exp act))
+    ))
 
 (deftest fill-one-row-aux-test-1
   (is (= :stub (pivot.step/fill-one-row-aux [] [] :stub)))
