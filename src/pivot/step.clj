@@ -60,6 +60,9 @@
         new-obj-row (fill-one-row m n obj-row nonbasic-indexes)]
     new-obj-row))
 
+(defn fill-basic-column [m n basic-indexes basic-values]
+  (fill-one-row m n basic-values basic-indexes))
+
 (defn get-z-value [obj-values]
   (first obj-values))
 
@@ -73,6 +76,7 @@
                       matrix :matrix
                       :as dict}]
   (if (>= idx m) [(fill-obj-row m n nonbasic-indexes obj-values)
+                  (fill-basic-column m n basic-indexes basic-values)
                   (get-z-value obj-values)
                   acc-matrix]
       (let [in-row (get matrix idx)
@@ -92,10 +96,11 @@
     (fill-rows empty dict)))
 
 (defn prepare-dict [dict]
-  (let [[obj-row z matrix] (make-full-matrix dict)
+  (let [[obj-row basic-column z matrix] (make-full-matrix dict)
         new-dict (assoc dict
                    :z z
                    :obj-row obj-row
+                   :basic-column basic-column
                    :matrix matrix)]
     new-dict))
 
