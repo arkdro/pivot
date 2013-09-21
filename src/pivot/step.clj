@@ -50,17 +50,19 @@
       (let [new-acc (assoc acc h-idx h-row)]
         (recur t-row t-idx new-acc))))
 
-(defn fill-one-row [m n basic-koef in-row nonbasic-indexes]
-  (let [row-no-koef (make-empty-row m n)
-        row (assoc row-no-koef 0 basic-koef)
+(defn fill-one-row [m n in-row nonbasic-indexes]
+  (let [row (make-empty-row m n)
         out-row (fill-one-row-aux in-row nonbasic-indexes row)]
     (vec out-row)))
 
-(defn fill-obj-row [m n nonbasic-indexes obj-values acc-matrix]
+(defn fill-obj-row [m n nonbasic-indexes obj-values]
   (let [obj-koef (first obj-values)
         obj-row (rest obj-values)
-        new-obj-row (fill-one-row m n obj-koef obj-row nonbasic-indexes)]
-    (assoc acc-matrix 0 new-obj-row)))
+        new-obj-row (fill-one-row m n obj-row nonbasic-indexes)]
+    new-obj-row))
+
+(defn get-z-value [obj-values]
+  (first obj-values))
 
 (defn fill-rows-aux [idx acc-matrix
                      {m :m
@@ -71,10 +73,12 @@
                       obj-values :obj-values
                       matrix :matrix
                       :as dict}]
-  (if (>= idx m) (fill-obj-row m n nonbasic-indexes obj-values acc-matrix)
+  (if (>= idx m) [(fill-obj-row m n nonbasic-indexes obj-values)
+                  (get-z-value obj-values)
+                  acc-matrix]
       (let [in-row (get matrix idx)
             basic-koef (get basic-values idx)
-            new-row (fill-one-row m n basic-koef in-row nonbasic-indexes)
+            new-row (fill-one-row m n in-row nonbasic-indexes)
             subscript (get basic-indexes idx)
             new-acc-matrix (assoc acc-matrix subscript new-row)]
         (recur (inc idx) new-acc-matrix dict))))
@@ -97,7 +101,11 @@
              basic-values :basic-values
              matrix :matrix
              :as dict}]
-  (let [upd-matrix (make-full-matrix dict)
+  (let [[obj-row z matrix] (make-full-matrix dict)
+        new-dict (assoc dict
+                   :z z
+                   :obj-row obj-row
+                   :matrix matrix)
         ]
     {:opt
      :val
