@@ -77,7 +77,6 @@
                   (get-z-value obj-values)
                   acc-matrix]
       (let [in-row (get matrix idx)
-            basic-koef (get basic-values idx)
             new-row (fill-one-row m n in-row nonbasic-indexes)
             subscript (get basic-indexes idx)
             new-acc-matrix (assoc acc-matrix subscript new-row)]
