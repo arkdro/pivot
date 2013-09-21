@@ -9,7 +9,7 @@
   (:gen-class)
   )
 
-;; (trace-ns 'pivot.other)
+;; (trace-ns 'pivot.step)
 
 (defn call-calc [verbose data]
   (if verbose
