@@ -2,6 +2,16 @@
   (:require [pivot.misc :as m])
   )
 
+(defn get-row-item [i row]
+  (if (nil? row) nil
+      (get row i)))
+
+(defn get-x-column [i matrix]
+  (cond
+    (nil? i) nil
+    (nil? matrix) nil
+    :default (vec (map #(get-row-item i %) matrix))))
+
 (defn find-entering-var [indexes values]
   (cond (empty? indexes) nil
         (empty? values) nil
