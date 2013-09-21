@@ -105,6 +105,7 @@
              :nonbasic-indexes [3 4 2 7]
              :obj-values [10.0 -1.0 1.0 -1.0 0.0]
              :basic-values [4.0 5.0 0.0]
+             :basic-column [nil 4.0 nil nil nil 5.0 0.0 nil]
              :obj-row [nil nil -1.0 -1.0 1.0 nil nil 0.0]
              :matrix [
                       nil
