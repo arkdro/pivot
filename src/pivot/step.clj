@@ -108,14 +108,19 @@
   (let [empty (make-empty-matrix m n)]
     (fill-rows empty dict)))
 
-(defn prepare-dict [dict]
-  (let [[obj-row basic-column z matrix] (make-full-matrix dict)
-        new-dict (assoc dict
-                   :z z
-                   :obj-row obj-row
-                   :basic-column basic-column
-                   :matrix matrix)]
-    new-dict))
+(defn prepare-dict [{basic-indexes :basic-indexes
+                     nonbasic-indexes :nonbasic-indexes
+                     :as dict}]
+  (let [[obj-row basic-column z matrix] (make-full-matrix dict)]
+    {
+     :z z
+     :obj-row obj-row
+     :basic-column basic-column
+     :nonbasic-indexes nonbasic-indexes
+     :basic-indexes basic-indexes
+     :matrix matrix
+     }
+    ))
 
 (defn calc [dict]
   (let [new-dict (prepare-dict dict)
